@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Report</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="page">
+        <nav class="top-nav">
+            <a href="/">Home</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/appointments">Appointments</a>
+            <a href="/doctor-schedule">Doctor Schedule</a>
+        </nav>
+
+        <h1>Admin Report</h1>
+
+        <section class="stats">
+            <div>
+                <strong th:text="${doctorCount}">0</strong>
+                <span>Doctors</span>
+            </div>
+            <div>
+                <strong th:text="${totalAppointments}">0</strong>
+                <span>Total Appointments</span>
+            </div>
+            <div>
+                <strong th:text="${bookedAppointments}">0</strong>
+                <span>Booked</span>
+            </div>
+            <div>
+                <strong th:text="${cancelledAppointments}">0</strong>
+                <span>Cancelled</span>
+            </div>
+        </section>
+
+        <h2>Appointment Records</h2>
+        <p th:if="${appointments.isEmpty()}">No appointment records yet.</p>
+
+        <div class="table-wrap" th:if="${!appointments.isEmpty()}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appointment : ${appointments}">
+                        <td th:text="${appointment.patientName}">Patient</td>
+                        <td th:text="${appointment.doctorName}">Doctor</td>
+                        <td th:text="${appointment.date}">Date</td>
+                        <td th:text="${appointment.time}">Time</td>
+                        <td th:text="${appointment.status}">Status</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

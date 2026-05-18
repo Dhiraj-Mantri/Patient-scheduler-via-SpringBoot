@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Schedule</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="page">
+        <nav class="top-nav">
+            <a href="/">Home</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/appointments">Appointments</a>
+            <a href="/admin">Admin</a>
+        </nav>
+
+        <h1>Doctor Schedule</h1>
+
+        <form class="toolbar" action="/doctor-schedule" method="get">
+            <label for="doctorName">Select doctor</label>
+            <select id="doctorName" name="doctorName" required>
+                <option value="">Choose doctor</option>
+                <option th:each="doctor : ${doctors}"
+                        th:value="${doctor.name}"
+                        th:text="${doctor.name + ' - ' + doctor.specialty}"
+                        th:selected="${doctor.name == selectedDoctor}">
+                    Doctor
+                </option>
+            </select>
+            <button type="submit">View Schedule</button>
+        </form>
+
+        <p th:if="${!hasSelectedDoctor}">Choose a doctor to view their schedule.</p>
+        <p th:if="${hasSelectedDoctor && appointments.isEmpty()}">No appointments found for this doctor.</p>
+
+        <div class="table-wrap" th:if="${hasSelectedDoctor && !appointments.isEmpty()}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appointment : ${appointments}">
+                        <td th:text="${appointment.patientName}">Patient</td>
+                        <td th:text="${appointment.date}">Date</td>
+                        <td th:text="${appointment.time}">Time</td>
+                        <td th:text="${appointment.status}">Status</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

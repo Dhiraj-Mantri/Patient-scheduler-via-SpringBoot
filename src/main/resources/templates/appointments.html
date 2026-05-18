@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointments</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="page">
+        <nav class="top-nav">
+            <a href="/">Home</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/book">Book</a>
+            <a href="/admin">Admin</a>
+        </nav>
+
+        <h1>Appointment History</h1>
+
+        <p th:if="${appointments.isEmpty()}">No appointments yet.</p>
+
+        <div class="table-wrap" th:if="${!appointments.isEmpty()}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appointment : ${appointments}">
+                        <td th:text="${appointment.patientName}">Patient</td>
+                        <td th:text="${appointment.doctorName}">Doctor</td>
+                        <td th:text="${appointment.date}">Date</td>
+                        <td th:text="${appointment.time}">Time</td>
+                        <td>
+                            <span class="status"
+                                  th:classappend="${appointment.booked} ? ' status-booked' : ' status-cancelled'"
+                                  th:text="${appointment.status}">
+                                Status
+                            </span>
+                        </td>
+                        <td>
+                            <form th:if="${appointment.booked}" action="/cancel" method="post">
+                                <input type="hidden" name="id" th:value="${appointment.id}">
+                                <button class="danger" type="submit">Cancel</button>
+                            </form>
+                            <span th:if="${!appointment.booked}">No action</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

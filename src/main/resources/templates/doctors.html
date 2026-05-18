@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctors</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main class="page">
+        <nav class="top-nav">
+            <a href="/">Home</a>
+            <a href="/appointments">Appointments</a>
+            <a href="/doctor-schedule">Doctor Schedule</a>
+            <a href="/admin">Admin</a>
+        </nav>
+
+        <h1>Available Doctors</h1>
+
+        <form class="toolbar" action="/doctors" method="get">
+            <label for="specialty">Search by specialty</label>
+            <input id="specialty" type="text" name="specialty" th:value="${specialty}" placeholder="Example: Cardiology">
+            <button type="submit">Search</button>
+            <a class="secondary-button" href="/doctors">Show All</a>
+        </form>
+
+        <p th:if="${doctors.isEmpty()}">No doctors found for this specialty.</p>
+
+        <div class="grid">
+            <article class="card" th:each="doctor : ${doctors}">
+                <h2 th:text="${doctor.name}">Doctor Name</h2>
+                <p th:text="${doctor.specialty}">Specialty</p>
+                <a class="button" th:href="@{/book(doctorName=${doctor.name})}">Book</a>
+            </article>
+        </div>
+    </main>
+</body>
+</html>
