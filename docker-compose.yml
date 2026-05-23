@@ -18,7 +18,7 @@ services:
       retries: 5
 
   app:
-    image: patient-scheduler:v1
+    image: dhirajmantri/patient-scheduler:latest
     container_name: patient-app
     ports:
       - "8080:8080"
