@@ -40,3 +40,6 @@ out/
 data/
 *.mv.db
 *.trace.db
+
+# Environment variables - never commit secrets
+.env

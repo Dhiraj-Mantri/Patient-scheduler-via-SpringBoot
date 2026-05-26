@@ -16,6 +16,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   app:
     image: dhirajmantri/patient-scheduler:latest
@@ -29,6 +34,17 @@ services:
         condition: service_healthy
     networks:
       - patient-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8080 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   nginx:
     image: nginx:alpine
@@ -41,6 +57,11 @@ services:
       - app
     networks:
       - patient-net
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 64M
 
 volumes:
   postgres-data:
