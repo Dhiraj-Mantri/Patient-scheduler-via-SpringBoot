@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Gradle build output
+build/
+.gradle/
+
+# Local database
+data/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+bin/
+
+# Docker files (no need to copy these into the image)
+Dockerfile
+docker-compose.yml
+nginx/
+
+# Documentation
+README.md
+HELP.md
+
+# Environment files
+.env
+.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
